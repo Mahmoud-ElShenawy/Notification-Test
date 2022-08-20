@@ -214,30 +214,28 @@ class NotificationHandler {
   Future<void> scheduleNotifications(NotificationEntity entity) async {
     if (entity.schedules != null && (entity.schedules?.length ?? 0) != 0) {
       for (var i = 0; i < (entity.schedules?.length ?? 0); i++) {
-        await AwesomeNotifications()
-            .createNotification(
-              content: NotificationContent(
-                id: i,
-                channelKey: CHANNEL_KEY,
-                title: '${entity.title} $i',
-                body: entity.body ?? '',
-                payload: entity.payload ?? {},
-                displayOnBackground: true,
-                displayOnForeground: true,
-                autoDismissible: true,
-                locked: true,
-                criticalAlert: true,
-                wakeUpScreen: true,
-                showWhen: true,
-              ),
-              schedule: NotificationCalendar.fromDate(
-                date: entity.schedules![i],
-                allowWhileIdle: true,
-                preciseAlarm: true,
-                repeats: true,
-              ),
-            )
-            .then((value) => FlutterAppBadger.updateBadgeCount(i));
+        await AwesomeNotifications().createNotification(
+          content: NotificationContent(
+            id: i,
+            channelKey: CHANNEL_KEY,
+            title: '${entity.title} $i',
+            body: entity.body ?? '',
+            payload: entity.payload ?? {},
+            displayOnBackground: true,
+            displayOnForeground: true,
+            autoDismissible: true,
+            locked: true,
+            criticalAlert: true,
+            wakeUpScreen: true,
+            showWhen: true,
+          ),
+          schedule: NotificationCalendar.fromDate(
+            date: entity.schedules![i],
+            allowWhileIdle: true,
+            preciseAlarm: true,
+            repeats: true,
+          ),
+        );
       }
     } else {
       debugPrint('There is not schedules to set up notifications');
